@@ -117,6 +117,11 @@ $(document).ready(function() {
         event.preventDefault();
     });
 
+    $("#toolbar .var-toggle.button").on("click", function(event) {
+        events.toggleSidebar("#variables-wrapper", ".var-toggle.button");
+        event.preventDefault();
+    });
+
     $("#toolbar .nav-back.button").on("click", function(event) {
         events.navigateBack();
         event.preventDefault();

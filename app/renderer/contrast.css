@@ -168,3 +168,50 @@
 .window.contrast .sidebar .nav-wrapper::-webkit-scrollbar-thumb {
     background: #323232;
 }
+
+/* Variable tracker sidebar */
+.window.contrast #variables-wrapper .var-header {
+    background-color: #282828;
+    border-bottom: 1px solid #333;
+}
+
+.window.contrast #variables-wrapper .var-search {
+    background: #333;
+    border: 1px solid #555;
+    color: #bbb;
+}
+
+.window.contrast #variables-wrapper .var-only-current,
+.window.contrast #variables-wrapper .var-flow {
+    color: #888;
+}
+
+.window.contrast #variables-wrapper .var-value {
+    color: #8cbce6;
+}
+
+.window.contrast #variables-wrapper .var-snippet {
+    color: #999;
+}
+
+.window.contrast #variables-wrapper .var-summary,
+.window.contrast #variables-wrapper .var-location {
+    color: #666;
+}
+
+.window.contrast #variables-wrapper .var-item.unused .var-summary,
+.window.contrast #variables-wrapper .var-item.never-read .var-summary {
+    color: #b5843a;
+}
+
+.window.contrast #variables-wrapper .var-usage.write .var-badge {
+    color: #f5b750;
+}
+
+.window.contrast #variables-wrapper .var-usage.read .var-badge {
+    color: #82c39c;
+}
+
+.window.contrast #variables-wrapper .var-usage.declaration .var-badge {
+    color: #999;
+}
