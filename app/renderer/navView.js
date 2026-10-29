@@ -398,7 +398,7 @@ function toggle(id, buttonId){
     var $button = $("#toolbar " + buttonId);
     var $thisPanel = $(id);
 
-    var columns =  2 - $(".nav-wrapper.hidden").length;
+    var columns =  $(".nav-wrapper").length - $(".nav-wrapper.hidden").length;
     if (columns > 0 && !$sidebarSplit.is(':animated'))
         sidebarWidth =  $sidebarSplit.position().left / columns; 
 

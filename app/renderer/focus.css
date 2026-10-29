@@ -165,3 +165,50 @@
 .window.focus .sidebar .nav-wrapper::-webkit-scrollbar-thumb {
     background: #323232;
 }
+
+/* Variable tracker sidebar */
+.window.focus #variables-wrapper .var-header {
+    background-color: #222;
+    border-bottom: 1px solid #2f2f2f;
+}
+
+.window.focus #variables-wrapper .var-search {
+    background: #333;
+    border: 1px solid #555;
+    color: #bbb;
+}
+
+.window.focus #variables-wrapper .var-only-current,
+.window.focus #variables-wrapper .var-flow {
+    color: #888;
+}
+
+.window.focus #variables-wrapper .var-value {
+    color: #8cbce6;
+}
+
+.window.focus #variables-wrapper .var-snippet {
+    color: #999;
+}
+
+.window.focus #variables-wrapper .var-summary,
+.window.focus #variables-wrapper .var-location {
+    color: #666;
+}
+
+.window.focus #variables-wrapper .var-item.unused .var-summary,
+.window.focus #variables-wrapper .var-item.never-read .var-summary {
+    color: #b5843a;
+}
+
+.window.focus #variables-wrapper .var-usage.write .var-badge {
+    color: #f5b750;
+}
+
+.window.focus #variables-wrapper .var-usage.read .var-badge {
+    color: #82c39c;
+}
+
+.window.focus #variables-wrapper .var-usage.declaration .var-badge {
+    color: #999;
+}

@@ -38,6 +38,9 @@
           <div class="button knot-toggle" title="Toggle knot browser">
             <span class="icon ink-icon icon-category"></span>
           </div>
+          <div class="button var-toggle" title="Toggle variable tracker">
+            <span class="icon icon-database"></span>
+          </div>
           <div class="button nav-back" title="Navigate back">
             <span class="icon icon-left-dir"></span>
           </div>
@@ -107,7 +110,17 @@
             </div>
             <div class="nav-wrapper hidden" id="knot-stitch-wrapper">
             </div>
-            
+            <div class="nav-wrapper hidden" id="variables-wrapper">
+              <div class="var-header">
+                <input type="search" class="var-search" placeholder="Filter variables">
+                <label class="var-only-current">
+                  <input type="checkbox"> Only used in <span class="var-current-flow"></span>
+                </label>
+              </div>
+              <div class="var-list">
+              </div>
+            </div>
+
             
             
           </div><!-- sidebar -->

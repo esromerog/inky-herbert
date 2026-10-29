@@ -372,6 +372,222 @@ img.issue-icon.warning {
   white-space: normal;
 }
 
+/* Variable tracker sidebar */
+
+#variables-wrapper .var-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 8px 8px 6px;
+  background: inherit;
+  background-color: #f5f5f4;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+#variables-wrapper .var-search {
+  width: 100%;
+  height: 24px;
+  padding: 2px 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+#variables-wrapper .var-only-current {
+  display: block;
+  margin: 6px 0 0;
+  font-size: 11px;
+  font-weight: normal;
+  color: #777;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#variables-wrapper .var-only-current input {
+  margin: 0 3px 0 0;
+  vertical-align: -2px;
+}
+
+#variables-wrapper .var-current-flow {
+  font-weight: bold;
+}
+
+#variables-wrapper .var-item {
+  position: relative;
+}
+
+#variables-wrapper .var-row {
+  position: relative;
+  padding: 3px 8px 3px 22px;
+}
+
+#variables-wrapper .var-row:hover {
+  background-color: rgba(128, 128, 128, 0.08);
+}
+
+#variables-wrapper .var-disclosure.icon {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  margin: 0;
+  width: 14px;
+  font-size: 12px;
+  transition: transform 0.15s;
+}
+
+#variables-wrapper .var-item.expanded .var-disclosure.icon {
+  transform: rotate(90deg);
+}
+
+/* Variables used in the knot the cursor is in */
+#variables-wrapper .var-item.in-current-flow .var-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 3px;
+  bottom: 3px;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background: #5b9bd5;
+}
+
+#variables-wrapper .var-name {
+  font-family: Monaco, monospace;
+  font-size: 12px;
+}
+
+#variables-wrapper .var-item.in-current-flow .var-name {
+  font-weight: bold;
+}
+
+#variables-wrapper .var-value {
+  float: right;
+  max-width: 45%;
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: 3px;
+  font-family: Monaco, monospace;
+  font-size: 11px;
+  line-height: 16px;
+  color: #2a6496;
+  background: rgba(91, 155, 213, 0.12);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#variables-wrapper .var-value:empty {
+  display: none;
+}
+
+#variables-wrapper .var-value.empty {
+  font-style: italic;
+  opacity: 0.6;
+}
+
+#variables-wrapper .var-value.changed {
+  animation: var-value-changed 1.5s ease-out;
+}
+
+@keyframes var-value-changed {
+  0%   { background: rgba(245, 183, 80, 0.9); color: #000; }
+  100% { background: rgba(91, 155, 213, 0.12); }
+}
+
+#variables-wrapper .var-summary {
+  display: block;
+  font-size: 10px;
+  color: #999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#variables-wrapper .var-item.unused .var-summary,
+#variables-wrapper .var-item.never-read .var-summary {
+  color: #d4973a;
+}
+
+#variables-wrapper .var-details {
+  display: none;
+  padding: 0 0 6px 22px;
+}
+
+#variables-wrapper .var-item.expanded .var-details {
+  display: block;
+}
+
+#variables-wrapper .var-flow {
+  margin: 5px 0 1px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#variables-wrapper .var-flow.function {
+  font-style: italic;
+}
+
+#variables-wrapper .var-usage {
+  padding: 1px 8px 1px 0;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#variables-wrapper .var-usage:hover {
+  background-color: rgba(128, 128, 128, 0.12);
+}
+
+#variables-wrapper .var-usage:hover .var-snippet {
+  text-decoration: underline;
+}
+
+#variables-wrapper .var-badge {
+  display: inline-block;
+  min-width: 30px;
+  margin-right: 4px;
+  padding: 0 3px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: bold;
+  line-height: 14px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#variables-wrapper .var-usage.write .var-badge {
+  color: #b5651d;
+  background: rgba(245, 183, 80, 0.25);
+}
+
+#variables-wrapper .var-usage.read .var-badge {
+  color: #3c7a55;
+  background: rgba(130, 195, 156, 0.25);
+}
+
+#variables-wrapper .var-usage.declaration .var-badge {
+  color: #777;
+  background: rgba(128, 128, 128, 0.15);
+}
+
+#variables-wrapper .var-snippet {
+  font-family: Monaco, monospace;
+  font-size: 10px;
+  color: #555;
+}
+
+#variables-wrapper .var-location {
+  margin-left: 4px;
+  font-size: 10px;
+  color: #aaa;
+}
+
 .sidebar .footer {
   position: absolute;
   left: 0;

@@ -21,6 +21,7 @@ const PlayerView = require("./playerView.js").PlayerView;
 const ToolbarView = require("./toolbarView.js").ToolbarView;
 const NavView = require("./navView.js").NavView;
 const ExpressionWatchView = require("./expressionWatchView").ExpressionWatchView;
+const VariablesView = require("./variablesView.js").VariablesView;
 const LiveCompiler = require("./liveCompiler.js").LiveCompiler;
 const InkProject = require("./inkProject.js").InkProject;
 const NavHistory = require("./navHistory.js").NavHistory;
@@ -36,6 +37,7 @@ InkProject.setEvents({
         NavView.setMainInkFilename(filename);
         NavHistory.reset();
         NavHistory.addStep();
+        VariablesView.scheduleRefresh(project);
     },
     "didSave": () => {
         var activeInk = InkProject.currentProject.activeInkFile;
@@ -51,6 +53,8 @@ InkProject.setEvents({
         var fileIssues = LiveCompiler.getIssuesForFilename(inkFile.relativePath());
         setImmediate(() => EditorView.setErrors(fileIssues));
         NavView.updateCurrentKnot(inkFile, EditorView.getCurrentCursorPos());
+        VariablesView.scheduleRefresh(InkProject.currentProject);
+        VariablesView.setCursor(inkFile.relativePath(), EditorView.getCurrentCursorPos().row);
         NavHistory.addStep();
     }
 });
@@ -91,6 +95,9 @@ LiveCompiler.setEvents({
         PlayerView.prepareForNewPlaythrough(sessionId);
         EditorView.clearErrors();
         ToolbarView.clearIssueSummary();
+        VariablesView.resetLiveValueBaseline();
+        // Catches files being loaded/added as well as edits
+        VariablesView.scheduleRefresh(InkProject.currentProject);
     },
     selectIssue: gotoIssue,
     textAdded: (text) => {
@@ -127,10 +134,13 @@ LiveCompiler.setEvents({
             if( expressionIdx >= ExpressionWatchView.numberOfExpressions() ) {
                 if( replaying ) {
                     PlayerView.addHorizontalDivider();
+                    doneCallback();
                 } else {
-                    PlayerView.contentReady();
+                    updateLiveVariableValues(() => {
+                        PlayerView.contentReady();
+                        doneCallback();
+                    });
                 }
-                doneCallback();
                 return;
             }
 
@@ -175,6 +185,20 @@ LiveCompiler.setEvents({
         ToolbarView.setBusySpinnerVisible(busy);
     }
 });
+
+// Ask the running story for the current value of every tracked variable,
+// so the variables sidebar can show them next to each variable
+function updateLiveVariableValues(callback) {
+    var expression = VariablesView.liveValuesExpression();
+    if( !expression ) {
+        callback();
+        return;
+    }
+    LiveCompiler.evaluateExpression(expression, (result, error) => {
+        VariablesView.setLiveValues(result, error);
+        callback();
+    });
+}
 
 ipc.on("project-stats", (event, visible) => {
     LiveCompiler.getStats((statsObj) => {
@@ -228,6 +252,7 @@ EditorView.setEvents({
     "change": () => {
         LiveCompiler.setEdited();
         NavView.setKnots(InkProject.currentProject.activeInkFile);
+        VariablesView.scheduleRefresh(InkProject.currentProject);
     },
     "jumpToSymbol": (symbolName, contextPos) => {
         var foundSymbol = InkProject.currentProject.findSymbol(symbolName, contextPos);
@@ -245,6 +270,7 @@ EditorView.setEvents({
     "changedLine": (pos) =>{
         if (InkProject.currentProject && InkProject.currentProject.activeInkFile){
             NavView.updateCurrentKnot(InkProject.currentProject.activeInkFile, pos);
+            VariablesView.setCursor(InkProject.currentProject.activeInkFile.relativePath(), pos.row);
     }
 }
 });
@@ -307,6 +333,14 @@ NavView.setEvents({
     },
     jumpToRow: (row) => {
         EditorView.gotoLine(row+1);
+    }
+});
+
+VariablesView.setEvents({
+    jumpTo: (filePath, row) => {
+        InkProject.currentProject.showInkFile(filePath);
+        EditorView.gotoLine(row+1);
+        NavHistory.addStep();
     }
 });
 
